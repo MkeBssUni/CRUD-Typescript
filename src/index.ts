@@ -6,6 +6,9 @@ import cors from "cors";
 import helmet from "helmet";
 import {itemsRouter} from "./items/items.router"
 
+import { errorHandler } from "./middleware/error-middleware";
+import { notFoundHandler } from "./middleware/not-found-middleware";
+
 dotenv.config(); //Permite importar variables del archivo .env
 
 /* App Variables */
@@ -24,6 +27,10 @@ app.use(helmet());
 app.use(cors());
 app.use(express.json());
 app.use("/api/menu/items", itemsRouter);
+
+//!IMPORTANT - Poner notFoundHandler y errorHandler una vez que ya haya terminado de implementar todas las rutas
+app.use(errorHandler);
+app.use(notFoundHandler);
 
 /* Server Activation */
 
