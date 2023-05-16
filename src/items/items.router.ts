@@ -10,7 +10,7 @@ export const itemsRouter = express.Router();
 //Controller Definitions
 
 //Get all
-itemsRouter.get("/items/", async (req: Request, res: Response)=>{
+itemsRouter.get("/", async (req: Request, res: Response)=>{
     try{
         const items: Item[] = await ItemService.findAll();
         res.status(200).send(items);
@@ -20,7 +20,7 @@ itemsRouter.get("/items/", async (req: Request, res: Response)=>{
 })
 
 //Get one
-itemsRouter.get("/items/:id", async (req:Request, res:Response)=>{
+itemsRouter.get("/:id", async (req:Request, res:Response)=>{
     try{
         const id: number= parseInt(req.params.id, 10);
         const item: Item = await ItemService.findOne(id);
@@ -36,7 +36,7 @@ itemsRouter.get("/items/:id", async (req:Request, res:Response)=>{
 })
 
 //Post
-itemsRouter.post("/items/", async (req: Request, res:Response)=>{
+itemsRouter.post("/", async (req: Request, res:Response)=>{
     try {
         const item: BaseItem = req.body;
         const newItem = await ItemService.create(item);
@@ -47,7 +47,7 @@ itemsRouter.post("/items/", async (req: Request, res:Response)=>{
 })
 
 //Put
-itemsRouter.put("/items/update/:id", async (req: Request, res: Response)=>{
+itemsRouter.put("/update/:id", async (req: Request, res: Response)=>{
     try {
         const id: number = parseInt(req.params.id, 10)
         const actualItem: Item = await ItemService.findOne(id);
@@ -70,12 +70,13 @@ itemsRouter.put("/items/update/:id", async (req: Request, res: Response)=>{
 })
 
 //Delete
-itemsRouter.delete("/items/:id", async (req: Request, res: Response)=>{
+itemsRouter.delete("/delete/:id", async (req: Request, res: Response)=>{
     try {
         const id: number = parseInt(req.params.id, 10)
         const item: Item = await ItemService.findOne(id);
         if(item){
             await ItemService.remove(id);
+            res.status(200).send("Item deleted")
         }else{
             res.status(400).send("Item not found")
         }

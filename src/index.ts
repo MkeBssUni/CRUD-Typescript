@@ -4,6 +4,7 @@ import * as dotenv from "dotenv";
 import express from "express";
 import cors from "cors";
 import helmet from "helmet";
+import {itemsRouter} from "./items/items.router"
 
 dotenv.config(); //Permite importar variables del archivo .env
 
@@ -19,9 +20,10 @@ const app = express();
 
 /* App Configuration */
 
-app.use(helmet()); //Ayuda a setear HTTP response headers
+app.use(helmet());
 app.use(cors());
 app.use(express.json());
+app.use("/api/menu/items", itemsRouter);
 
 /* Server Activation */
 
